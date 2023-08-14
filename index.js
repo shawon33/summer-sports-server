@@ -31,11 +31,25 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
-    const instructorsCollection = client.db("summer-camph").collection("instructor");
+    const instructorsCollection = client.db("summer-camph").collection("Instructor");
     const classCollection = client.db("summer-camph").collection("class");
 
 
     // write here for servier
+
+    app.get("/class", async (req, res) => {
+      const cursor = classCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
+    app.get("/Instructor", async (req, res) => {
+      const cursor = instructorsCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
+
 
 
     // Send a ping to confirm a successful connection
