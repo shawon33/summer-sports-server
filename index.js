@@ -31,6 +31,10 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
+    const instructorsCollection = client.db("summer-camph").collection("instructor");
+    const classCollection = client.db("summer-camph").collection("class");
+
+
     // write here for servier
 
 
