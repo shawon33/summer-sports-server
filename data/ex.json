@@ -1,17 +1,17 @@
 [
     {
-        "image": "",
-        "name":"",
-        "instructor":"",
-        "available_seats":"",
-        "price":""
-    },
+        "image": "https://images.pexels.com/photos/163351/girl-boxer-ring-boxing-pear-163351.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "name":"Boxing",
+        "instructor":"Chudorie sub",
+        "available_seats":"10",
+        "price":"8000"
+    }, 
     {
-        "image": "",
-        "name":"",
-        "instructor":"",
-        "available_seats":"",
-        "price":""
+        "image": "https://images.pexels.com/photos/4753923/pexels-photo-4753923.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "name":"Boxing",
+        "instructor":"Chudorie sub",
+        "available_seats":"10",
+        "price":"8000"
     }
     , {
         "image": "https://images.pexels.com/photos/4753923/pexels-photo-4753923.jpeg?auto=compress&cs=tinysrgb&w=600",
