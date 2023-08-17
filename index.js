@@ -33,6 +33,7 @@ async function run() {
 
     const instructorsCollection = client.db("summer-camph").collection("Instructor");
     const classCollection = client.db("summer-camph").collection("class");
+    const extraCollection = client.db("summer-camph").collection("extrasection");
 
 
     // write here for servier
@@ -45,6 +46,11 @@ async function run() {
 
     app.get("/Instructor", async (req, res) => {
       const cursor = instructorsCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+    app.get("/extrasection", async (req, res) => {
+      const cursor = extraCollection.find();
       const result = await cursor.toArray();
       res.send(result);
     });

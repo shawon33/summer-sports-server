@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Yoga",
+        "img": "https://images.pexels.com/photos/3965399/pexels-photo-3965399.jpeg?auto=compress&cs=tinysrgb&w=1600",
+        "info": "Increased Strength: Various yoga poses involve weight-bearing exercises that help build strength in the muscles, including the core, arms, legs, and back."
+    },
+    {
+        "name":"Crying Training",
+        "img":"https://images.pexels.com/photos/6134659/pexels-photo-6134659.jpeg?auto=compress&cs=tinysrgb&w=1600",
+        "info":"Emotional Healing: Crying can be a part of the healing process, particularly during times of loss, heartbreak, or emotional pain. It allows us to acknowledge and process our emotions, facilitating emotional healing and growth."
+    },
+    {
+        "name":"Food Guidance",
+        "img":"https://images.pexels.com/photos/17890558/pexels-photo-17890558/free-photo-of-hands-holding-glass-of-smoothie.jpeg?auto=compress&cs=tinysrgb&w=1600",
+        "info":"Eat a Variety of Nutrient-Dense Foods: Include a wide range of fruits, vegetables, whole grains, lean proteins, and healthy fats in your diet. This ensures you get a diverse array of nutrients."
+    },
+    {
+        "name": "Health Care",
+        "img": "https://images.pexels.com/photos/2280568/pexels-photo-2280568.jpeg?auto=compress&cs=tinysrgb&w=1600",
+        "info":"Improved Mental Clarity and Focus: The combination of physical movement, breath control, and meditation in yoga helps to clear the mind, increase mental clarity, and improve focus and concentration."
+    }
+]
