@@ -35,6 +35,8 @@ async function run() {
     const classCollection = client.db("summer-camph").collection("class");
     const extraCollection = client.db("summer-camph").collection("extrasection");
 
+    // sports Collection
+    const sportsCollection = client.db("summer-camph").collection("sports");
 
     // write here for servier
 
@@ -49,11 +51,32 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+
+    // extra section
     app.get("/extrasection", async (req, res) => {
       const cursor = extraCollection.find();
       const result = await cursor.toArray();
       res.send(result);
     });
+
+
+    // class with post and email
+    app.get('/sports', async(req,res)=>{
+      const email= req.query.email;
+      if(!email){
+        res.send([]);
+      }
+      const query = {email: email}
+      const result = await sportsCollection.find(query).toArray();
+      res.send(result)
+    })
+
+    app.post('/sports',async(req,res)=>{
+      const sports = req.body;
+      console.log(sports);
+      const result = await sportsCollection.insertOne(sports);
+      res.send(result);
+    })
 
 
 
