@@ -12,9 +12,6 @@ app.get("/", (req, res) => {
   res.send("sports info is ready");
 });
 
-
-
-
 const uri = `mongodb+srv://${process.env.SC_NAME}:${process.env.SC_PASS}@cluster0.qkjph1d.mongodb.net/?retryWrites=true&w=majority`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -23,7 +20,7 @@ const client = new MongoClient(uri, {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
-  }
+  },
 });
 
 async function run() {
@@ -31,13 +28,24 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
-    const instructorsCollection = client.db("summer-camph").collection("Instructor");
+    const instructorsCollection = client
+      .db("summer-camph")
+      .collection("Instructor");
     const classCollection = client.db("summer-camph").collection("class");
-    const extraCollection = client.db("summer-camph").collection("extrasection");
+    const extraCollection = client
+      .db("summer-camph")
+      .collection("extrasection");
+    const userCollection = client.db("summer-camph").collection("user");
 
     // sports Collection
     const sportsCollection = client.db("summer-camph").collection("sports");
 
+    // user api
+    app.post("/users", async (req, res) => {
+      const user = req.body;
+      const result = await userCollection.insertOne(user);
+      res.send(result)
+    });
     // write here for servier
 
     app.get("/class", async (req, res) => {
@@ -59,45 +67,42 @@ async function run() {
       res.send(result);
     });
 
-
     // class with post and email
-    app.get('/sports', async(req,res)=>{
-      const email= req.query.email;
-      if(!email){
+    app.get("/sports", async (req, res) => {
+      const email = req.query.email;
+      if (!email) {
         res.send([]);
       }
-      const query = {email: email}
+      const query = { email: email };
       const result = await sportsCollection.find(query).toArray();
-      res.send(result)
-    })
+      res.send(result);
+    });
 
-    app.post('/sports',async(req,res)=>{
+    app.post("/sports", async (req, res) => {
       const sports = req.body;
       console.log(sports);
       const result = await sportsCollection.insertOne(sports);
       res.send(result);
-    })
-    
-    app.delete('/sports/:id', async (req, res) => {
+    });
+
+    app.delete("/sports/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await sportsCollection.deleteOne(query);
       res.send(result);
-    })
-
-
-
+    });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!"
+    );
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
   }
 }
 run().catch(console.dir);
-
 
 app.listen(port, (req, res) => {
   console.log(`sports info is running  port : ${port}`);
