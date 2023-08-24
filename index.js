@@ -35,32 +35,62 @@ async function run() {
     const extraCollection = client
       .db("summer-camph")
       .collection("extrasection");
-    const userCollection = client.db("summer-camph").collection("user");
+
+      // user collection
+    const usersCollection = client.db("summer-camph").collection("users");
 
     // sports Collection
     const sportsCollection = client.db("summer-camph").collection("sports");
 
     // user api
+    app.get('/users',async(req,res)=>{
+      const cursor = usersCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
     app.post("/users", async (req, res) => {
       const user = req.body;
-      const result = await userCollection.insertOne(user);
-      res.send(result)
+      const query = { email: user.email }
+      const existedUser = await usersCollection.findOne(query);
+      if (existedUser) {
+        return res.send({ message: 'user already exists' })
+      }
+      const result = await usersCollection.insertOne(user);
+      res.send(result);
     });
+
+    app.patch('/users/admin/:id',async (req,res)=>{
+      const id = req.params.id;
+      const filter =  {_id : new ObjectId(id)}
+      const updateDoc = {
+        $set:{
+          role :'admin'
+        }
+      }
+      const result = await usersCollection.updateOne(filter,updateDoc);
+      res.send(result)
+    })
+    // app.delete()
+
     // write here for servier
 
+    // class api
     app.get("/class", async (req, res) => {
       const cursor = classCollection.find();
       const result = await cursor.toArray();
       res.send(result);
     });
 
+    // instructor api
     app.get("/Instructor", async (req, res) => {
       const cursor = instructorsCollection.find();
       const result = await cursor.toArray();
       res.send(result);
     });
 
-    // extra section
+    // extra-section api
+
     app.get("/extrasection", async (req, res) => {
       const cursor = extraCollection.find();
       const result = await cursor.toArray();
