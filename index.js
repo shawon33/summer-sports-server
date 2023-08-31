@@ -49,11 +49,15 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
-    const instructorsCollection = client.db("summer-camph").collection("Instructor");
+    const instructorsCollection = client
+      .db("summer-camph")
+      .collection("Instructor");
 
     const classCollection = client.db("summer-camph").collection("class");
 
-    const extraCollection = client.db("summer-camph").collection("extrasection");
+    const extraCollection = client
+      .db("summer-camph")
+      .collection("extrasection");
 
     // user collection
     const usersCollection = client.db("summer-camph").collection("users");
@@ -63,6 +67,10 @@ async function run() {
 
     // payment collection
     const paymentCollection = client.db("summer-camph").collection("payment");
+    // enrollClass Collection
+    const enrollCollection = client
+      .db("summer-camph")
+      .collection("enrollClass");
 
     // JWT
     app.post("/jwt", async (req, res) => {
@@ -223,12 +231,6 @@ async function run() {
 
     // payment api
 
-    // app.get("/payment",verifyJWt, async (req, res) => {
-    //   const cursor = paymentCollection.find();
-    //   const result = await cursor.toArray();
-    //   res.send(result);
-    // });
-
     app.get("/payment", verifyJWt, async (req, res) => {
       const email = req.query.email;
       // console.log(email);
@@ -247,13 +249,31 @@ async function run() {
 
     app.post("/payments", verifyJWt, async (req, res) => {
       const payment = req.body;
-      console.log("sala",payment.paymentId);
+      // console.log("sala",payment.paymentId);
       const result = await paymentCollection.insertOne(payment);
       const query = {
-        _id: { $in: payment.paymentId.map(id =>new ObjectId(id)) }
+        _id: { $in: payment.paymentId.map((id) => new ObjectId(id)) },
       };
+      console.log(query);
+      const enrollClass =payment.item;
+      const enroll = await enrollCollection.insertMany(enrollClass)
       const deleteResult = await sportsCollection.deleteMany(query);
-      res.send({ result, deleteResult });
+      res.send({ result, deleteResult,enroll });
+    });
+    // enroll class get api
+
+    app.get("/enrollClass", verifyJWt, async (req, res) => {
+      const email = req.query.email;
+      if (!email) {
+        res.send([]);
+      }
+      const decodedEmail = req.decoded.email;
+      if (email !== decodedEmail) {
+        return res.status(401).send({ error: true, message: "Faltoo people" });
+      }
+      const query = { email: email };
+      const result = await enrollCollection.find(query).toArray();
+      res.send(result);
     });
 
     // Send a ping to confirm a successful connection
