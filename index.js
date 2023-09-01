@@ -93,6 +93,20 @@ async function run() {
       }
       next();
     };
+    // Instructor verify
+    // const verifyInstructor = async (req, res, next) => {
+    //   console.log(req);
+    //   const email = req.decoded.email;
+    //   const query = { email: email };
+    //   const user = await usersCollection.findOne(query);
+    //   if (user?.role !== "instructor") {
+    //     return res
+    //       .status(403)
+    //       .send({ error: true, message: "forbidden message" });
+    //   }
+    //   next();
+    // };
+   
 
     // user api
     app.get("/users", verifyJWt, verifyAdmin, async (req, res) => {
@@ -166,6 +180,14 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+
+    app.post('/class',async(req,res)=>{
+      const infoClass = req.body;
+      console.log(infoClass);
+      const result = await classCollection.insertOne(infoClass);
+      console.log(result);
+      res.send(result);
+    })
 
     // instructor api
     app.get("/Instructor", async (req, res) => {
