@@ -183,9 +183,7 @@ async function run() {
 
     app.post('/class',async(req,res)=>{
       const infoClass = req.body;
-      console.log(infoClass);
       const result = await classCollection.insertOne(infoClass);
-      console.log(result);
       res.send(result);
     })
 
